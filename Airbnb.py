@@ -9,9 +9,9 @@ from urllib.parse import quote_plus
 from PIL import Image
 
 username = quote_plus('pugazh')
-password = quote_plus('Lp573kH6XXdHxP75')  # URL encoding the password, useful if special characters were present
+password = quote_plus('TUxgwwDe2ZsqS1Sz')  # URL encoding the password, useful if special characters were present
 
-connection_string = f"mongodb+srv://{username}:{password}@airbnb.p0q2gkx.mongodb.net/"
+connection_string = f"mongodb+srv://{username}:{password}@airbnb.ncjevdt.mongodb.net/"
 
 client = MongoClient(connection_string)
 
@@ -57,26 +57,23 @@ dataf.reset_index(drop=True,inplace=True)
 csv_file_path = 'Airbnb_data_Analysis.csv'
 dataf.to_csv(csv_file_path, index=False)
 
-@st.cache
+
 def extract_countries():
     countries = [doc['address']['country'] for doc in col.find({}, {"address.country": 1})]
     unique_countries = sorted(set(countries))
     return unique_countries
 
-@st.cache
 def list_property():
     properties=[doc['property_type'] for doc in col.find({},{"property_type":1})]
     unique_properties=sorted(set(properties))
     return unique_properties
 
-@st.cache
 def amenities():
     stage1={"$unwind":"$amenities"}
     stage2={"$project":{"_id":0,"amenity":"$amenities"}}
     result=[i['amenity'] for i in col.aggregate([stage1,stage2])]
     return result
 
-@st.cache
 def max_nights(days, col,country,pt):
     stage1 = {"$match": {"minimum_nights": str(days),"address.country":country,"property_type":pt}}  # Ensure days is converted to string
     stage2 = {"$project": {"_id": 0, "name": 1, "property_type": 1, "room_type": 1,"price":1,
@@ -85,7 +82,6 @@ def max_nights(days, col,country,pt):
     result = [i for i in col.aggregate([stage1, stage2])]
     return result
 
-@st.cache
 def amen_based(col, selected_amenity,country,pt):
     stage1 = {"$match": {"amenities": selected_amenity,"address.country":country,"property_type":pt}}
     stage2 = {
@@ -95,13 +91,13 @@ def amen_based(col, selected_amenity,country,pt):
     result = [i for i in col.aggregate([stage1, stage2])]
     return result
 
-@st.cache
+
 def room_list(country):
     rooms = [doc['name'] for doc in col.find({"address.country": country}, {"name": 1})]
     unique_rooms = sorted(set(rooms))
     return unique_rooms
 
-@st.cache
+
 def room_info(col, selected_room, country):
     stage1 = {"$match": {"name": selected_room, "address.country": country}}
     stage2 = {
@@ -111,7 +107,7 @@ def room_info(col, selected_room, country):
     result = [i for i in col.aggregate([stage1, stage2])]
     return result
 
-@st.cache
+
 def days(user_data, col,country,pt):
     stage1 = {
         "$match": {
@@ -127,7 +123,6 @@ def days(user_data, col,country,pt):
     result = [i for i in col.aggregate([stage1, stage2])]
     return result
 
-@st.cache
 def location(country):
     stage1 = {"$match":{"address.country":country}}
     stage2={"$group": {"_id": "$property_type", "count": {"$sum": 1}}}
@@ -138,7 +133,6 @@ def location(country):
     result = [i for i in col.aggregate([stage1, stage2,stage3])]
     return result
 
-@st.cache
 def group_property_types(country):
     pipeline = [
         {"$match": {"address.country": country}},  
@@ -146,7 +140,6 @@ def group_property_types(country):
     result = list(col.aggregate(pipeline))   
     return result
 
-@st.cache
 def top_10_prop(country):
     pipeline = [
     {"$match": {"address.country": country}},  
@@ -156,7 +149,6 @@ def top_10_prop(country):
     result = list(col.aggregate(pipeline))
     return result
 
-@st.cache
 def price(country):
     pipeline=[
     {"$match":{"address.country": country}},
@@ -165,7 +157,6 @@ def price(country):
     result = list(col.aggregate(pipeline))
     return result
 
-@st.cache
 def top_host(country):
     pipeline = [
         {"$match": {"address.country": country}},
@@ -253,7 +244,7 @@ if selected == "Discover Properties":
         
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            list1=st.selectbox("Key Features",["Number of Nights","Availability of Days","Amenities"])
+            list1=st.selectbox("Key Features",["Number of Nights","Availability of Days"])
         
         if list1=="Number of Nights":    
             with col1:
