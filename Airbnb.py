@@ -8,6 +8,7 @@ from bson.decimal128 import Decimal128
 from urllib.parse import quote_plus
 from PIL import Image
 
+
 username = quote_plus('pugazh')
 password = quote_plus('TUxgwwDe2ZsqS1Sz')  # URL encoding the password, useful if special characters were present
 
@@ -397,4 +398,4 @@ if selected == "Dive into Data":
             df_filtered.index=df_filtered.index+1
             fig=px.bar(df_filtered,title="Top 10 Host based on Listing Count",x="Host Name",y="Total Listing",color="Host Name")
             st.plotly_chart(fig, use_container_width=True)
-            
+        
