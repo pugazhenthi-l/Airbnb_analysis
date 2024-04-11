@@ -24,4 +24,4 @@ Before you can run this application, you'll need to have the following installed
 Configuration
 To connect to your MongoDB database, update the connection_string in the Airbnb.py file with your database credentials:
 
-connection_string = "mongodb+srv://your_username:your_password@your_cluster_url"
+`connection_string = "mongodb+srv://your_username:your_password@your_cluster_url"`
