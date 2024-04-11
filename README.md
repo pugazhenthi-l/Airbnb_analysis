@@ -25,3 +25,12 @@ Configuration
 To connect to your MongoDB database, update the connection_string in the Airbnb.py file with your database credentials:
 
 `connection_string = "mongodb+srv://your_username:your_password@your_cluster_url"`
+
+## Interactive Data Visualizations
+
+For a deeper dive into the data and to explore interactive visualizations, check out our Tableau dashboard. This dashboard provides insights into various aspects of the Airbnb dataset, including trends, patterns, and analytics that complement the findings from this project.
+
+[Explore the Airbnb Data Visualization Dashboard](https://public.tableau.com/app/profile/pugazhenthi6838/viz/Airbnbanalysistry_17127763660380/Dashboard1)
+
+The dashboard is interactive and allows for filtering and slicing the data in various ways to uncover unique insights. We encourage you to interact with the visualizations to gain a better understanding of the data.
+
